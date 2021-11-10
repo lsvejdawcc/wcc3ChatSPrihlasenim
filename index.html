@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Chat</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+  </head>
+  <body onload="poNacteni()">
+    <h1>Chat</h1>
+
+    <h2>Registrace uživatele</h2>
+    Plné jméno:
+    <input type="text" id="plnejmeno">
+    <br>
+    Přihlašovací jméno:
+    <input type="text" id="prihljmeno">
+    <br>
+    Heslo:
+    <input type="password" id="heslo">
+    <br>
+    Zopakujte heslo:
+    <input type="password" id="heslo2">
+    <br>
+    <button onclick="registruj()">Zaregistrovat</button>
+
+    <h2>Přihlášení uživatele</h2>
+
+    <h2>Komunikace</h2>
+
+    <input type="text" id="zprava" placeholder="zadej text zprávy">
+    <button onclick="odesliZpravu()">Odeslat</button>
+
+    <div id="zpravy">...</div>
+
+  </body>
+</html>
