@@ -10,8 +10,7 @@ let pocetPozadavku = 0;
 function zpracovaniPozadavku(pozadavek, odpoved) {
   pocetPozadavku++; //zvyseni o 1
 
-  console.log("url: " + pozadavek.url);
-  console.log("IP: " + pozadavek.connection.remoteAddress);
+  //console.log("url: " + pozadavek.url);
 
   if (pozadavek.url == "/") {
     odpoved.writeHead(200, {"Content-type": "text/html"});
@@ -38,3 +37,4 @@ function zpracovaniPozadavku(pozadavek, odpoved) {
 
 let srv = http.createServer(zpracovaniPozadavku);
 srv.listen(8080);
+console.log("Aplikace běží na http://localhost:8080...");
