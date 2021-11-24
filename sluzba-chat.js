@@ -1,6 +1,7 @@
 const url = require("url"); //prace s adresou požadavku, parametry,...
 const fs = require("fs"); //prace se soubory
 const requestIp = require('request-ip'); //zjisteni P adresy
+const overeniTokenu = require("./sluzba-uzivatele.js").overeniTokenu; //import funkce
 
 const SOUBOR_ZPRAVY = "zpravy.json";
 
@@ -10,11 +11,20 @@ if (fs.existsSync(SOUBOR_ZPRAVY)) {
 }
 
 exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
-  if (pozadavek.url.startsWith("/chat/pridej")) {
-    //zpracovani parametru
-    let parametry = url.parse(pozadavek.url, true).query;
-    console.log(parametry);
+  //zpracovani parametru
+  let parametry = url.parse(pozadavek.url, true).query;
+  console.log(parametry);
 
+  if (!overeniTokenu(parametry.token)) {
+    odpoved.writeHead(200, {"Content-type": "application/json"});
+    let o = {};
+    o.stav = "chyba";
+    o.chyba = "neplatny uzivatel";
+    odpoved.end(JSON.stringify(o));
+    return;
+  }
+
+  if (pozadavek.url.startsWith("/chat/pridej")) {
     //pridani zpravy do seznamu zprav
     let z = {};
     z.prezdivka = parametry.prezdivka; 

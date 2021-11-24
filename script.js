@@ -13,11 +13,17 @@ function stiskKlavesyDolu(udalost) {
 
 async function nactiZpravy() {
   //sestaveni url vcetne parametru
-  let url = location.href + "chat/nacti";
+  let url = location.href + "chat/nacti?token="+tokenUzivatele;
   console.log(url);
   let response = await fetch(url);
   let data = await response.json();
   //console.log(data);
+
+  if (data.stav != "ok") {
+    console.error(data.chyba);
+    return;
+  }
+
 
   let s = "";
   for (let zprava of data.zpravy) {
@@ -37,7 +43,7 @@ async function odesliZpravu() {
   if (z == "") return; //pri prazdne zprave se funkce hned ukonci
 
   //sestaveni url vcetne parametru
-  let url = location.href + "chat/pridej?prezdivka="+p+"&text="+z;
+  let url = location.href + "chat/pridej?token="+tokenUzivatele+"&text="+z;
   console.log(url);
   let response = await fetch(url);
   let data = await response.json();
@@ -83,6 +89,7 @@ async function registruj() {
   //document.getElementById("vysledek").innerHTML = data.vysledek;
 }
 
+let tokenUzivatele;
 async function prihlas() {
   //nacteni vstupu ze stranky
   let prihljm = document.getElementById("loginprihljmeno").value;
@@ -101,6 +108,6 @@ async function prihlas() {
   }
 
   //vysledek
-  //document.getElementById("vysledek").innerHTML = data.vysledek;
+  tokenUzivatele = data.token;
 }
 

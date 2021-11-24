@@ -55,10 +55,14 @@ exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
     for (let u of uzivatele) {
       if (u.prihlasovacijmeno == parametry.prihljm) {
         if (u.heslo == zahashujHeslo(parametry.heslo)) {
+          let token = crypto.randomBytes(16).toString('hex');
+          u.token = token;
+
           //odpoved
           odpoved.writeHead(200, {"Content-type": "application/json"});
           let o = {};
           o.stav = "ok";
+          o.token = token;
           o.plnejmeno = u.plnejmeno;
           odpoved.end(JSON.stringify(o));
           return;
@@ -74,3 +78,12 @@ exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
     odpoved.end();
   }
 }
+
+exports.overeniTokenu = function (token) {
+  for (let u of uzivatele) {
+    if (u.token == token) {
+      return true;
+    }
+  }
+  return false;
+}  
