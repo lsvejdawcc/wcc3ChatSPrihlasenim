@@ -57,6 +57,7 @@ exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
         if (u.heslo == zahashujHeslo(parametry.heslo)) {
           let token = crypto.randomBytes(16).toString('hex');
           u.token = token;
+          u.platnostTokenuDo = Date.now() + 60 * 1000; //platnost tokenu vyprsi za minutu
 
           //odpoved
           odpoved.writeHead(200, {"Content-type": "application/json"});
@@ -82,7 +83,12 @@ exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
 exports.overeniTokenu = function (token) {
   for (let u of uzivatele) {
     if (u.token == token) {
-      return true;
+      if (Date.now() < u.platnostTokenuDo) {
+        u.platnostTokenuDo = Date.now() + 60 * 1000; //platnost tokenu vyprsi za minutu
+        return true;
+      } else {
+        return false;
+      }
     }
   }
   return false;
