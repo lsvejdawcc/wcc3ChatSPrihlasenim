@@ -16,11 +16,11 @@ function zahashujHeslo(heslo) {
 }
 
 exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
-  if (pozadavek.url.startsWith("/uzivatele/registruj")) {
-    //zpracovani parametru
-    let parametry = url.parse(pozadavek.url, true).query;
-    console.log(parametry);
+  //zpracovani parametru
+  let parametry = url.parse(pozadavek.url, true).query;
+  console.log(parametry);
 
+  if (pozadavek.url.startsWith("/uzivatele/registruj")) {
     //kontrola existence prihlasovaciho jmena
     for (let u of uzivatele) {
       if (u.prihlasovacijmeno == parametry.prihljm) {
@@ -50,12 +50,24 @@ exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
     let o = {};
     o.stav = "ok";
     odpoved.end(JSON.stringify(o));
-  } else if (pozadavek.url.startsWith("/chat/nacti")) {
-    //odpoved
-    odpoved.writeHead(200, {"Content-type": "application/json"});
+  } else if (pozadavek.url.startsWith("/uzivatele/prihlas")) {
+    //kontrola existence prihlasovaciho jmena
+    for (let u of uzivatele) {
+      if (u.prihlasovacijmeno == parametry.prihljm) {
+        if (u.heslo == zahashujHeslo(parametry.heslo)) {
+          //odpoved
+          odpoved.writeHead(200, {"Content-type": "application/json"});
+          let o = {};
+          o.stav = "ok";
+          o.plnejmeno = u.plnejmeno;
+          odpoved.end(JSON.stringify(o));
+          return;
+        }
+      }
+    }
     let o = {};
-    o.stav = "ok";
-    o.uzivatele = uzivatele;
+    o.stav = "chyba";
+    o.chyba = "Uživatel neexistuje nebo nesouhlasí heslo!";
     odpoved.end(JSON.stringify(o));
   } else { //not found
     odpoved.writeHead(404);

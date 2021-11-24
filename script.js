@@ -83,3 +83,24 @@ async function registruj() {
   //document.getElementById("vysledek").innerHTML = data.vysledek;
 }
 
+async function prihlas() {
+  //nacteni vstupu ze stranky
+  let prihljm = document.getElementById("loginprihljmeno").value;
+  let heslo = document.getElementById("loginheslo").value;
+
+  //sestaveni url vcetne parametru
+  let url = location.href + "uzivatele/prihlas?prihljm="+prihljm+"&heslo="+heslo;
+  console.log(url);
+  let response = await fetch(url);
+  let data = await response.json();
+  console.log(data);
+
+  if (data.stav != "ok") {
+    alert(data.chyba);
+    return;
+  }
+
+  //vysledek
+  //document.getElementById("vysledek").innerHTML = data.vysledek;
+}
+
