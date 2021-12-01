@@ -1,7 +1,5 @@
 async function poNacteni() {
   document.getElementById("zprava").addEventListener("keydown", stiskKlavesyDolu);
-
-  setInterval(nactiZpravy, 1000);
 }
 
 function stiskKlavesyDolu(udalost) {
@@ -109,5 +107,6 @@ async function prihlas() {
 
   //vysledek
   tokenUzivatele = data.token;
+  setInterval(nactiZpravy, 1000);
 }
 
