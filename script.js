@@ -1,5 +1,7 @@
 async function poNacteni() {
   document.getElementById("zprava").addEventListener("keydown", stiskKlavesyDolu);
+
+  ukazPrihlaseni();
 }
 
 function stiskKlavesyDolu(udalost) {
@@ -108,5 +110,23 @@ async function prihlas() {
   //vysledek
   tokenUzivatele = data.token;
   setInterval(nactiZpravy, 1000);
+  ukazKomunikaci();
 }
 
+function ukazRegistraci() {
+  document.getElementById("oblast_registrace").style.display = "block";
+  document.getElementById("oblast_prihlaseni").style.display = "none";
+  document.getElementById("oblast_komunikace").style.display = "none";
+}
+
+function ukazPrihlaseni() {
+  document.getElementById("oblast_registrace").style.display = "none";
+  document.getElementById("oblast_prihlaseni").style.display = "block";
+  document.getElementById("oblast_komunikace").style.display = "none";
+}
+
+function ukazKomunikaci() {
+  document.getElementById("oblast_registrace").style.display = "none";
+  document.getElementById("oblast_prihlaseni").style.display = "none";
+  document.getElementById("oblast_komunikace").style.display = "block";
+}
