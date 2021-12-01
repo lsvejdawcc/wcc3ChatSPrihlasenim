@@ -13,9 +13,10 @@ function stiskKlavesyDolu(udalost) {
 
 async function nactiZpravy() {
   //sestaveni url vcetne parametru
-  let url = location.href + "chat/nacti?token="+tokenUzivatele;
-  console.log(url);
-  let response = await fetch(url);
+  let url = location.href + "chat/nacti";
+  let body = {};
+  body.token = tokenUzivatele;
+  let response = await fetch(url,{method: "POST", body: JSON.stringify(body)});
   let data = await response.json();
   //console.log(data);
 
@@ -43,9 +44,11 @@ async function odesliZpravu() {
   if (z == "") return; //pri prazdne zprave se funkce hned ukonci
 
   //sestaveni url vcetne parametru
-  let url = location.href + "chat/pridej?token="+tokenUzivatele+"&text="+z;
-  console.log(url);
-  let response = await fetch(url);
+  let url = location.href + "chat/pridej";
+  let body = {};
+  body.token = tokenUzivatele;
+  body.text = z;
+  let response = await fetch(url,{method: "POST", body: JSON.stringify(body)});
   let data = await response.json();
   console.log(data);
 
@@ -74,9 +77,12 @@ async function registruj() {
   }
 
   //sestaveni url vcetne parametru
-  let url = location.href + "uzivatele/registruj?plnejmeno="+plnejm+"&prihljm="+prihljm+"&heslo="+heslo;
-  console.log(url);
-  let response = await fetch(url);
+  let url = location.href + "uzivatele/registruj";
+  let body = {};
+  body.plnejmeno = plnejm;
+  body.prihljm = prihljm;
+  body.heslo = heslo;
+  let response = await fetch(url,{method: "POST", body: JSON.stringify(body)});
   let data = await response.json();
   console.log(data);
 
@@ -96,9 +102,11 @@ async function prihlas() {
   let heslo = document.getElementById("loginheslo").value;
 
   //sestaveni url vcetne parametru
-  let url = location.href + "uzivatele/prihlas?prihljm="+prihljm+"&heslo="+heslo;
-  console.log(url);
-  let response = await fetch(url);
+  let url = location.href + "uzivatele/prihlas";
+  let body = {};
+  body.prihljm = prihljm;
+  body.heslo = heslo;
+  let response = await fetch(url,{method: "POST", body: JSON.stringify(body)});
   let data = await response.json();
   console.log(data);
 

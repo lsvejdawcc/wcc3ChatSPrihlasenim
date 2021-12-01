@@ -15,11 +15,7 @@ function zahashujHeslo(heslo) {
   return crypto.createHash("sha256").update(kZahashovani).digest('hex');
 }
 
-exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
-  //zpracovani parametru
-  let parametry = url.parse(pozadavek.url, true).query;
-  console.log(parametry);
-
+exports.zpracovaniPozadavku = function (pozadavek,parametry,odpoved) {
   if (pozadavek.url.startsWith("/uzivatele/registruj")) {
     //kontrola existence prihlasovaciho jmena
     for (let u of uzivatele) {

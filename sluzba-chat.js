@@ -10,11 +10,7 @@ if (fs.existsSync(SOUBOR_ZPRAVY)) {
   zpravy = JSON.parse(fs.readFileSync(SOUBOR_ZPRAVY));
 }
 
-exports.zpracovaniPozadavku = function (pozadavek, odpoved) {
-  //zpracovani parametru
-  let parametry = url.parse(pozadavek.url, true).query;
-  console.log(parametry);
-
+exports.zpracovaniPozadavku = function (pozadavek,parametry,odpoved) {
   if (!overeniTokenu(parametry.token)) {
     odpoved.writeHead(200, {"Content-type": "application/json"});
     let o = {};
