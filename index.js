@@ -24,6 +24,9 @@ function zpracovaniPozadavku(pozadavek, odpoved) {
     odpoved.writeHead(200, {"Content-type": "application/javascript"});
     let s = fs.readFileSync("script.js").toString();
     odpoved.end(s);
+  } else if (pozadavek.url == "/favicon.ico") { //na url /favicon.ico...
+    odpoved.writeHead(200, {"Content-type": "image/png"});
+    odpoved.end(fs.readFileSync("mimon.png")); //...vracim obsah souboru mimon.png
   } else if (pozadavek.url.startsWith("/chat")) {
     zpracovaniChatu(pozadavek, odpoved);
   } else if (pozadavek.url.startsWith("/uzivatele")) {
